@@ -7,6 +7,8 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [tableConfigs, setTableConfigs] = useState({});
 
+  const [showAdvice, setShowAdvice] = useState(false);
+
   const handleFileChange = (e) => {
     if (e.target.files && e.target.files[0]) {
       setFile(e.target.files[0]);
@@ -103,17 +105,59 @@ function App() {
       </header>
 
       {!documentData ? (
-        <div className="upload-section">
+        <div className="upload-section" style={{ position: 'relative', overflow: 'hidden' }}>
+          <button 
+            onClick={() => setShowAdvice(!showAdvice)}
+            style={{ 
+              position: 'absolute', top: '10px', right: '10px', 
+              background: 'rgba(255,193,7,0.1)', border: '1px solid #ffc107', 
+              color: '#ffc107', borderRadius: '20px', padding: '5px 12px',
+              cursor: 'pointer', fontSize: '0.85rem', fontWeight: 'bold',
+              zIndex: 10
+            }}
+          >
+            {showAdvice ? '✕ Close' : '⚠️ Advice'}
+          </button>
+
           <div className="upload-icon">📄</div>
           <h2>Upload your Document</h2>
+          
+          {showAdvice && (
+            <div style={{
+              marginTop: '1.5rem', marginBottom: '1.5rem',
+              background: 'rgba(255,193,7,0.05)', border: '1px solid rgba(255,193,7,0.2)',
+              borderRadius: '12px', padding: '1.5rem', textAlign: 'left',
+              animation: 'slideDown 0.3s ease-out'
+            }}>
+              <h3 style={{ color: '#ffc107', fontSize: '1rem', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                📢 Optimizing Your Results
+              </h3>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem', fontSize: '0.9rem', lineHeight: '1.4' }}>
+                <div>
+                  <strong style={{ color: '#4ade80' }}>✅ Formats:</strong> PDF, Excel (.xlsx, .xls), Word (.docx).
+                </div>
+                <div>
+                  <strong style={{ color: '#fbbf24' }}>✅ Structure:</strong> Clear, non-merged tables work best.
+                </div>
+                <div>
+                  <strong style={{ color: '#f87171' }}>⚠️ Headers:</strong> No blank values in header rows!
+                </div>
+              </div>
+            </div>
+          )}
+
           <p style={{ color: 'var(--text-secondary)', marginTop: '0.5rem' }}>
-            Supported formats: PDF, DOCX, XLSX, CSV, TXT, Images
+            Supported formats: PDF, DOCX, XLSX, CSV, TXT
           </p>
           <div className="file-input-wrapper">
             <button className="btn">
               {file ? file.name : 'Choose File'}
             </button>
-            <input type="file" onChange={handleFileChange} />
+            <input 
+              type="file" 
+              accept=".pdf,.docx,.xlsx,.xls,.txt,.csv" 
+              onChange={handleFileChange} 
+            />
           </div>
           <div style={{ marginTop: '2rem' }}>
             <button 

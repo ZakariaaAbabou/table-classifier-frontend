@@ -22,7 +22,7 @@ function App() {
     formData.append('file', file);
 
     try {
-      const baseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080';
+      const baseUrl = import.meta.env.VITE_API_BASE_URL || 'https://table-classifier.onrender.com';
       const response = await fetch(`${baseUrl}/api/upload`, {
         method: 'POST',
         body: formData,
@@ -66,7 +66,7 @@ function App() {
   const handleGeneratePdf = async () => {
     setLoading(true);
     try {
-      const baseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080';
+      const baseUrl = import.meta.env.VITE_API_BASE_URL || 'https://table-classifier.onrender.com';
       const response = await fetch(`${baseUrl}/api/generate-pdf`, {
         method: 'POST',
         headers: {
